@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Enforcement Analytics & Zone Hotspots — TraffiVigil{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 border-bottom border-light-subtle" style="border-color: rgba(255,255,255,0.08) !important;">
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 fw-bold">
+                <i class="bi bi-graph-up-arrow me-1"></i> ENFORCEMENT TELEMETRY
+            </span>
+        </div>
+        <h2 class="fw-bold mb-0 text-white font-heading">Enforcement Analytics & Zone Hotspots</h2>
+        <p class="text-secondary small mb-0 fw-medium">Real-time breakdown of violation types, collection efficiency, and high-frequency traffic intersections.</p>
+    </div>
+    <div class="mt-3 mt-md-0 d-flex gap-2">
+        <a href="{{ url_for('export_violations_csv') }}" class="btn btn-modern-success">
+            <i class="bi bi-file-earmark-spreadsheet"></i> Export Analytics (.CSV)
+        </a>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-blue h-100">
+            <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.72rem;">Database Callset</span>
+            <div class="stat-number text-white">{{ total_violations }}</div>
+            <span class="text-secondary small">Total Recorded Incidents</span>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-green h-100">
+            <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.72rem;">Recovery Efficiency</span>
+            <div class="stat-number text-success">{{ "{:.1f}".format(recovery_rate) }}%</div>
+            <span class="text-secondary small">Fine Settlement Rate</span>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-green h-100">
+            <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.72rem;">Realized Collections</span>
+            <div class="stat-number text-success" style="font-size: 1.7rem;">₹{{ "{:,.0f}".format(total_collected_amount) }}</div>
+            <span class="text-secondary small">Collected Revenue</span>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-red h-100">
+            <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.72rem;">Pending Recovery</span>
+            <div class="stat-number text-danger" style="font-size: 1.7rem;">₹{{ "{:,.0f}".format(total_fine_amount - total_collected_amount) }}</div>
+            <span class="text-secondary small">Outstanding Fines</span>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12 col-lg-6">
+        <div class="card card-modern h-100">
+            <div class="card-modern-header py-3">
+                <h6 class="fw-bold mb-0 text-white font-heading"><i class="bi bi-pie-chart-fill text-primary me-2"></i>Offense Frequency Distribution</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table-modern">
+                        <thead>
+                            <tr>
+                                <th>Offense Type</th>
+                                <th class="text-center">Count</th>
+                                <th class="text-end">Total Fine (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stat in offense_stats %}
+                            <tr>
+                                <td>
+                                    <span class="fw-bold text-white">{{ stat.violation_type }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-1 font-mono">{{ stat.count }}</span>
+                                </td>
+                                <td class="text-end">
+                                    <span class="fw-bold text-success font-heading">₹{{ "{:,.2f}".format(stat.total_fine or 0) }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Intersections Hotspots -->
+    <div class="col-12 col-lg-6">
+        <div class="card card-modern h-100">
+            <div class="card-modern-header py-3">
+                <h6 class="fw-bold mb-0 text-white font-heading"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Top Enforcement Hotspot Junctions</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table-modern">
+                        <thead>
+                            <tr>
+                                <th>Location & City Junction</th>
+                                <th class="text-center">Logged Incidents</th>
+                                <th class="text-end">Fine Volume (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for h in hotspot_stats %}
+                            <tr>
+                                <td>
+                                    <span class="fw-bold text-white"><i class="bi bi-pin-map-fill text-danger me-1"></i>{{ h.location }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-3 py-1 font-mono">{{ h.count }}</span>
+                                </td>
+                                <td class="text-end">
+                                    <span class="fw-bold text-white font-heading">₹{{ "{:,.2f}".format(h.total_fine or 0) }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

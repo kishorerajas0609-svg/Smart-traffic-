@@ -1,0 +1,667 @@
+/* ==========================================================================
+   SMART TRAFFIC VIOLATION LOGGER - CLEAN MODERN OBSIDIAN BLACK SYSTEM
+   Simple, clean, standard font stack with luminous electric blue accents.
+   ========================================================================== */
+
+:root {
+  /* Obsidian Dark Theme */
+  --bg-dark-root: #030712;
+  --bg-dark-base: #090d16;
+  --bg-dark-card: #0f172a;
+  --bg-dark-surface: #1e293b;
+  --bg-dark-input: #0b1120;
+  
+  /* Luminous Electric Blue Palette */
+  --electric-blue: #3b82f6;
+  --electric-cyan: #38bdf8;
+  --electric-indigo: #6366f1;
+  --electric-border-glow: rgba(56, 189, 248, 0.4);
+  
+  /* Status Colors */
+  --status-paid-bg: rgba(16, 185, 129, 0.12);
+  --status-paid-text: #34d399;
+  --status-paid-border: rgba(16, 185, 129, 0.35);
+  --status-paid-glow: #10b981;
+  
+  --status-unpaid-bg: rgba(239, 68, 68, 0.12);
+  --status-unpaid-text: #f87171;
+  --status-unpaid-border: rgba(239, 68, 68, 0.35);
+  --status-unpaid-glow: #ef4444;
+
+  /* Typography Colors */
+  --text-white: #f8fafc;
+  --text-slate: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-dark-hover: rgba(56, 189, 248, 0.3);
+
+  /* Simple Standard Font Stack */
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+
+  /* Shadows */
+  --shadow-dark-md: 0 6px 16px rgba(0, 0, 0, 0.5);
+  --shadow-dark-lg: 0 16px 36px rgba(0, 0, 0, 0.65);
+}
+
+/* ==========================================================================
+   BLUE POINTER & GLOWING CURSOR FOLLOWER
+   ========================================================================== */
+
+html, body {
+  cursor: default;
+}
+
+a, button, input[type="submit"], input[type="button"], .btn, .nav-link-custom, select, .pointer-active {
+  cursor: pointer;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #38bdf8;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border: 2px solid rgba(56, 189, 248, 0.6);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, transform 0.15s ease-out;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.35);
+}
+
+.cursor-glow.hovering {
+  width: 58px;
+  height: 58px;
+  border-color: #60a5fa;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, transparent 70%);
+  box-shadow: 0 0 35px rgba(59, 130, 246, 0.6);
+}
+
+/* ==========================================================================
+   BASE STYLES & LAYOUT
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-dark-root);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.08) 0px, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.08) 0px, transparent 45%);
+  background-attachment: fixed;
+  color: var(--text-slate);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: -0.01em;
+}
+
+.font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+
+.navbar-police {
+  background: rgba(3, 7, 18, 0.9) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-dark);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  padding: 0.85rem 0;
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-white) !important;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand-icon-wrapper {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.5);
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+.nav-link-custom {
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.95rem !important;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nav-link-custom:hover {
+  color: var(--text-white) !important;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link-custom.active {
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.officer-badge-pill {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--border-dark);
+  color: var(--text-slate);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ==========================================================================
+   CARDS & STATS
+   ========================================================================== */
+
+.card-modern {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 18px;
+  box-shadow: var(--shadow-dark-lg);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  color: var(--text-slate);
+}
+
+.card-modern:hover {
+  border-color: var(--border-dark-hover);
+}
+
+.card-modern-header {
+  padding: 1.2rem 1.6rem;
+  background: rgba(11, 17, 32, 0.95);
+  border-bottom: 1px solid var(--border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-modern-body {
+  padding: 1.6rem;
+}
+
+.stat-card-modern {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 18px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-dark-md);
+  transition: all 0.2s ease;
+}
+
+.stat-card-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--stat-glow-1, #3b82f6), var(--stat-glow-2, #38bdf8));
+}
+
+.stat-card-modern:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-dark-hover);
+}
+
+.stat-card-blue { --stat-glow-1: #2563eb; --stat-glow-2: #38bdf8; }
+.stat-card-red { --stat-glow-1: #ef4444; --stat-glow-2: #f87171; }
+.stat-card-green { --stat-glow-1: #10b981; --stat-glow-2: #34d399; }
+.stat-card-amber { --stat-glow-1: #f59e0b; --stat-glow-2: #fbbf24; }
+
+.stat-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-white);
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   VEHICLE PLATE (HSRP)
+   ========================================================================== */
+
+.vehicle-plate-modern {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  color: #090d16;
+  border: 2px solid #334155;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  vertical-align: middle;
+}
+
+.vehicle-plate-modern .plate-ind {
+  background: #1e3a8a;
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1.5px solid #334155;
+  line-height: 1;
+}
+
+.vehicle-plate-modern .plate-ind .chakra {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: 1px dashed #60a5fa;
+  margin-bottom: 2px;
+}
+
+.vehicle-plate-modern .plate-number {
+  padding: 3px 8px;
+}
+
+.vehicle-plate-large {
+  font-size: 1.3rem;
+  border-width: 2px;
+  border-radius: 8px;
+}
+
+.vehicle-plate-large .plate-ind {
+  font-size: 0.75rem;
+  padding: 5px 8px;
+}
+
+.vehicle-plate-large .plate-number {
+  padding: 5px 14px;
+}
+
+/* ==========================================================================
+   STATUS BADGES
+   ========================================================================== */
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+}
+
+.badge-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.badge-paid-modern {
+  background: var(--status-paid-bg);
+  color: var(--status-paid-text);
+  border: 1px solid var(--status-paid-border);
+}
+
+.badge-paid-modern::before {
+  background: var(--status-paid-glow);
+  box-shadow: 0 0 8px var(--status-paid-glow);
+}
+
+.badge-unpaid-modern {
+  background: var(--status-unpaid-bg);
+  color: var(--status-unpaid-text);
+  border: 1px solid var(--status-unpaid-border);
+}
+
+.badge-unpaid-modern::before {
+  background: var(--status-unpaid-glow);
+  box-shadow: 0 0 8px var(--status-unpaid-glow);
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ==========================================================================
+   INPUTS & BUTTONS
+   ========================================================================== */
+
+.form-control-modern, .form-select-modern {
+  background: var(--bg-dark-input);
+  border: 1.5px solid var(--border-dark);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text-white);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.form-control-modern::placeholder {
+  color: #475569;
+}
+
+.form-control-modern:focus, .form-select-modern:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+  outline: none;
+  background: #0d1527;
+  color: #ffffff;
+}
+
+.input-group-text-modern {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid var(--border-dark);
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  color: #38bdf8;
+  padding: 0.75rem 1rem;
+}
+
+.input-group > .form-control-modern {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.btn-modern-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #0284c7 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-modern-primary:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+}
+
+.btn-modern-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.7rem 1.3rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-modern-success:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-modern-outline {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1.5px solid var(--border-dark);
+  color: var(--text-slate);
+  font-weight: 600;
+  padding: 0.6rem 1.15rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-modern-outline:hover {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: var(--border-dark-hover);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   TABLES
+   ========================================================================== */
+
+.table-modern {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--text-slate);
+}
+
+.table-modern thead th {
+  background: rgba(11, 17, 32, 0.95);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-dark);
+  white-space: nowrap;
+}
+
+.table-modern tbody td {
+  padding: 1rem 1.25rem;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.92rem;
+}
+
+.table-modern tbody tr:hover td {
+  background-color: rgba(30, 41, 59, 0.5);
+}
+
+/* ==========================================================================
+   CHALLAN PASS & PUBLIC STATUS
+   ========================================================================== */
+
+.challan-pass-card {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 20px;
+  box-shadow: var(--shadow-dark-lg);
+  overflow: hidden;
+}
+
+.challan-pass-header {
+  background: linear-gradient(135deg, #050811 0%, #0f172a 100%);
+  color: #ffffff;
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.challan-stamp {
+  display: inline-block;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  padding: 0.4rem 1.2rem;
+  border-radius: 10px;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+
+.challan-stamp.paid {
+  background: rgba(16, 185, 129, 0.15);
+  border: 3px solid #10b981;
+  color: #34d399;
+}
+
+.challan-stamp.unpaid {
+  background: rgba(239, 68, 68, 0.15);
+  border: 3px solid #ef4444;
+  color: #f87171;
+}
+
+.qr-terminal-box {
+  background: rgba(11, 17, 32, 0.8);
+  border: 2px dashed rgba(56, 189, 248, 0.4);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+
+.public-hero-card {
+  background: var(--bg-dark-card);
+  border-radius: 24px;
+  border: 1px solid var(--border-dark);
+  box-shadow: var(--shadow-dark-lg);
+  overflow: hidden;
+}
+
+.public-status-beacon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.public-status-beacon.paid {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.35);
+}
+
+.public-status-beacon.unpaid {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  box-shadow: 0 0 35px rgba(239, 68, 68, 0.35);
+}
+
+.footer-modern {
+  background: #02050b;
+  color: #64748b;
+  border-top: 1px solid var(--border-dark);
+  padding: 1.5rem 0;
+  margin-top: auto;
+  font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .navbar, .footer-modern, .no-print, .btn, .alert, .cursor-dot, .cursor-glow {
+    display: none !important;
+  }
+  .challan-pass-card {
+    border: 1.5px solid #000000 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    width: 100% !important;
+  }
+  .challan-pass-header {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #000000 !important;
+    padding: 1.5rem !important;
+  }
+  .challan-pass-header * {
+    color: #000000 !important;
+  }
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}

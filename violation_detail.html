@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Challan #{{ violation.id }} Details — TraffiVigil{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 border-bottom border-light-subtle">
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 fw-bold font-mono">
+                RECORD #{{ violation.id }}
+            </span>
+            <span class="text-secondary small">Logged: {{ violation.created_at.strftime('%d-%b-%Y at %I:%M %p') }}</span>
+        </div>
+        <h2 class="fw-bold mb-0 text-dark font-heading">Violation Dossier & Status Manager</h2>
+    </div>
+    <div class="d-flex gap-2 mt-3 mt-md-0">
+        <a href="{{ url_for('view_challan', id=violation.id) }}" class="btn btn-modern-primary">
+            <i class="bi bi-receipt"></i> Printable Challan Pass
+        </a>
+        <a href="{{ url_for('violations_list') }}" class="btn btn-modern-outline">
+            <i class="bi bi-arrow-left"></i> Back to Callset
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Left Column: Dossier -->
+    <div class="col-12 col-lg-8">
+        <div class="card card-modern mb-4">
+            <div class="card-modern-header py-3">
+                <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-info-circle text-primary me-2"></i>Offense Metadata</h5>
+                {% if violation.payment_status == 'Paid' %}
+                    <span class="badge-status badge-paid-modern fs-6">PAID / SETTLED</span>
+                {% else %}
+                    <span class="badge-status badge-unpaid-modern fs-6">UNPAID OUTSTANDING</span>
+                {% endif %}
+            </div>
+            <div class="card-modern-body p-4">
+                <div class="row g-4">
+                    <div class="col-sm-6">
+                        <label class="text-secondary small text-uppercase fw-bold d-block mb-1">Vehicle Registration Plate</label>
+                        <div class="vehicle-plate-modern vehicle-plate-large">
+                            <span class="plate-ind"><span class="chakra"></span>IND</span>
+                            <span class="plate-number">{{ violation.vehicle_number }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-secondary small text-uppercase fw-bold d-block mb-1">Violation Offense</label>
+                        <span class="fs-5 fw-bold text-dark font-heading d-block">{{ violation.violation_type }}</span>
+                        <small class="text-danger fw-semibold">Statutory Non-Compoundable Offense</small>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="text-secondary small text-uppercase fw-bold d-block mb-1">Location of Offense</label>
+                        <span class="fs-6 text-dark fw-semibold"><i class="bi bi-geo-alt-fill text-danger me-1"></i>{{ violation.location }}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-secondary small text-uppercase fw-bold d-block mb-1">Date of Offense</label>
+                        <span class="fs-6 text-dark fw-semibold"><i class="bi bi-calendar-event-fill text-info me-1"></i>{{ violation.violation_date.strftime('%A, %d %B %Y') }}</span>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label class="text-secondary small text-uppercase fw-bold d-block mb-1">Compounding Fine</label>
+                        <span class="fs-3 fw-bold text-success font-heading">₹{{ "{:,.2f}".format(violation.fine_amount) }}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-secondary small text-uppercase fw-bold d-block mb-1">Payment Status</label>
+                        {% if violation.payment_status == 'Paid' %}
+                            <span class="badge-status badge-paid-modern fs-6">Paid & Cleared</span>
+                        {% else %}
+                            <span class="badge-status badge-unpaid-modern fs-6">Unpaid Pending</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Status Actions Card -->
+        <div class="card card-modern">
+            <div class="card-modern-header py-3">
+                <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-credit-card-2-front-fill text-success me-2"></i>Payment Lifecycle Controls</h5>
+            </div>
+            <div class="card-modern-body p-4">
+                {% if violation.payment_status == 'Unpaid' %}
+                <p class="text-secondary mb-3">This challan is currently registered as <strong class="text-danger">UNPAID</strong>. Upon verification of fine collection at the traffic control station or municipal portal, update status below.</p>
+                <form method="POST" action="{{ url_for('update_payment_status', id=violation.id) }}">
+                    <input type="hidden" name="payment_status" value="Paid">
+                    <button type="submit" class="btn btn-modern-success py-3 px-4 fs-6">
+                        <i class="bi bi-check2-circle fs-5"></i> Mark Fine as PAID & CLEARED
+                    </button>
+                </form>
+                {% else %}
+                <div class="p-3 bg-success-subtle border border-success-subtle rounded-4 d-flex align-items-center mb-3">
+                    <i class="bi bi-patch-check-fill fs-2 text-success me-3"></i>
+                    <div>
+                        <h6 class="fw-bold text-success mb-0">Fine Settled in Official Records</h6>
+                        <small class="text-secondary">Receipt has been cleared and verified in SQLite persistence.</small>
+                    </div>
+                </div>
+                <form method="POST" action="{{ url_for('update_payment_status', id=violation.id) }}">
+                    <input type="hidden" name="payment_status" value="Unpaid">
+                    <button type="submit" class="btn btn-modern-outline btn-sm text-warning-emphasis" onclick="return confirm('Revert payment status back to UNPAID?');">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i> Revert Status to Unpaid
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: QR Terminal & Citizen View -->
+    <div class="col-12 col-lg-4">
+        <div class="card card-modern text-center p-4">
+            <h5 class="fw-bold text-dark mb-1 font-heading"><i class="bi bi-qr-code text-primary me-1"></i>Dynamic QR Terminal</h5>
+            <p class="text-secondary small mb-3">Encoded with direct link to public citizen verification portal.</p>
+            
+            <div class="qr-terminal-box mb-3 d-inline-block mx-auto">
+                <img src="{{ url_for('static', filename='qr_codes/challan_' ~ violation.id ~ '.png') }}" 
+                     alt="QR Code for Challan #{{ violation.id }}" 
+                     class="img-fluid rounded-3" style="max-width: 190px;">
+            </div>
+
+            <div class="mb-3">
+                <a href="{{ url_for('public_violation_status', id=violation.id) }}" target="_blank" class="btn btn-modern-outline btn-sm w-100">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Open Citizen Status Page
+                </a>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('view_challan', id=violation.id) }}" class="btn btn-modern-primary">
+                    <i class="bi bi-printer"></i> Print Official Challan Pass
+                </a>
+                <form method="POST" action="{{ url_for('delete_violation', id=violation.id) }}" onsubmit="return confirm('Permanently delete Challan #{{ violation.id }}?');">
+                    <button type="submit" class="btn btn-outline-danger btn-sm w-100 rounded-pill py-2">
+                        <i class="bi bi-trash3 me-1"></i> Delete Challan Record
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

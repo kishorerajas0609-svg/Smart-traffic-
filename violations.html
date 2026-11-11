@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}Violations Callset & Search — TraffiVigil{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 border-bottom border-light-subtle">
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill px-3 py-1 fw-bold small">
+                <i class="bi bi-shield-check me-1"></i> TRAFFIC OFFENSE DATABASE
+            </span>
+        </div>
+        <h2 class="fw-bold mb-0 text-dark font-heading">Violations Callset & Registry</h2>
+        <p class="text-secondary small mb-0 fw-medium">Search, filter by vehicle, export CSV datasets, and update fine payment lifecycles.</p>
+    </div>
+    <div class="mt-3 mt-md-0 d-flex gap-2">
+        <a href="{{ url_for('export_violations_csv', vehicle_number=vehicle_query, violation_type=type_query, violation_date=date_query, payment_status=status_query) }}" 
+           class="btn btn-modern-success" title="Download matching rows as CSV dataset">
+            <i class="bi bi-file-earmark-spreadsheet"></i> Export Dataset (.CSV)
+        </a>
+        <a href="{{ url_for('add_violation') }}" class="btn btn-modern-primary">
+            <i class="bi bi-plus-circle-fill"></i> Issue Challan
+        </a>
+    </div>
+</div>
+
+<!-- Modern Search & Filter Panel -->
+<div class="card card-modern mb-4 border-0">
+    <div class="card-modern-header py-3 bg-light">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-funnel-fill text-primary"></i>
+            <span class="fw-bold text-dark small text-uppercase letter-spacing">Multi-Parameter Search & Query Filter</span>
+        </div>
+        <span class="badge bg-white border text-secondary rounded-pill px-3 py-1 font-mono small">
+            Matched: {{ total_matching }} Records
+        </span>
+    </div>
+    <div class="card-modern-body p-3 p-md-4">
+        <form method="GET" action="{{ url_for('violations_list') }}">
+            <div class="row g-3">
+                <!-- Vehicle Number Search -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label class="form-label small fw-bold text-secondary text-uppercase" style="font-size: 0.72rem;">Vehicle Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text-modern"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control form-control-modern vehicle-input font-mono fw-bold" name="vehicle_number" 
+                               placeholder="e.g. TN01AB1234" value="{{ vehicle_query }}">
+                    </div>
+                </div>
+
+                <!-- Violation Type Filter -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label class="form-label small fw-bold text-secondary text-uppercase" style="font-size: 0.72rem;">Offense Category</label>
+                    <select class="form-select form-select-modern" name="violation_type">
+                        <option value="">All Violation Types</option>
+                        {% for vtype in violation_types_list %}
+                            <option value="{{ vtype }}" {% if type_query == vtype %}selected{% endif %}>{{ vtype }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Date Filter -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label class="form-label small fw-bold text-secondary text-uppercase" style="font-size: 0.72rem;">Violation Date</label>
+                    <input type="date" class="form-control form-control-modern" name="violation_date" value="{{ date_query }}">
+                </div>
+
+                <!-- Payment Status Filter -->
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label class="form-label small fw-bold text-secondary text-uppercase" style="font-size: 0.72rem;">Payment Status</label>
+                    <select class="form-select form-select-modern" name="payment_status">
+                        <option value="">All Statuses (Paid + Unpaid)</option>
+                        <option value="Unpaid" {% if status_query == 'Unpaid' %}selected{% endif %}>Unpaid Outstanding</option>
+                        <option value="Paid" {% if status_query == 'Paid' %}selected{% endif %}>Paid / Settled</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                <span class="text-secondary small fw-medium">
+                    Showing <strong>{{ violations|length }}</strong> of <strong>{{ total_matching }}</strong> records
+                    {% if pagination.pages > 1 %} · <span class="badge bg-primary-subtle text-primary rounded-pill">Page {{ pagination.page }} of {{ pagination.pages }}</span>{% endif %}
+                </span>
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('violations_list') }}" class="btn btn-sm btn-modern-outline">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </a>
+                    <button type="submit" class="btn btn-sm btn-modern-primary px-3">
+                        <i class="bi bi-funnel"></i> Apply Filter
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Records Data Table Card -->
+<div class="card card-modern">
+    <div class="card-modern-header py-3">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-table text-primary"></i>
+            <h5 class="fw-bold mb-0 text-dark">Traffic Violations Master Log</h5>
+        </div>
+        {% if violations %}
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-light text-dark border font-mono small">Total: {{ total_matching }}</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="card-body p-0">
+        {% if violations %}
+        <div class="table-responsive">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th>Challan ID</th>
+                        <th>Vehicle Registration Plate</th>
+                        <th>Violation Type</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Compounding Fine</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in violations %}
+                    <tr>
+                        <td>
+                            <span class="font-mono fw-bold text-secondary">#{{ v.id }}</span>
+                        </td>
+                        <td>
+                            <div class="vehicle-plate-modern">
+                                <span class="plate-ind"><span class="chakra"></span>IND</span>
+                                <span class="plate-number">{{ v.vehicle_number }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-dark">{{ v.violation_type }}</span>
+                        </td>
+                        <td>
+                            <span class="text-secondary small"><i class="bi bi-geo-alt text-danger me-1"></i>{{ v.location }}</span>
+                        </td>
+                        <td>
+                            <span class="text-secondary small">{{ v.violation_date.strftime('%d-%b-%Y') }}</span>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-dark font-heading fs-6">₹{{ "{:,.2f}".format(v.fine_amount) }}</span>
+                        </td>
+                        <td>
+                            {% if v.payment_status == 'Paid' %}
+                                <span class="badge-status badge-paid-modern">Paid</span>
+                            {% else %}
+                                <span class="badge-status badge-unpaid-modern">Unpaid</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('violation_detail', id=v.id) }}" class="btn btn-light border" title="Inspect Record" data-bs-toggle="tooltip">
+                                    <i class="bi bi-eye-fill text-primary"></i>
+                                </a>
+                                <a href="{{ url_for('view_challan', id=v.id) }}" class="btn btn-light border" title="Printable Challan Pass" data-bs-toggle="tooltip">
+                                    <i class="bi bi-receipt text-secondary"></i>
+                                </a>
+                                {% if v.payment_status == 'Unpaid' %}
+                                <form method="POST" action="{{ url_for('update_payment_status', id=v.id) }}" class="d-inline" onsubmit="return confirm('Confirm payment settlement for Challan #{{ v.id }}?');">
+                                    <input type="hidden" name="payment_status" value="Paid">
+                                    <button type="submit" class="btn btn-light border text-success" title="Mark as Paid" data-bs-toggle="tooltip">
+                                        <i class="bi bi-check2-circle"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
+                                <form method="POST" action="{{ url_for('delete_violation', id=v.id) }}" class="d-inline" onsubmit="return confirm('Permanently delete Challan #{{ v.id }}?');">
+                                    <button type="submit" class="btn btn-light border text-danger" title="Delete Record" data-bs-toggle="tooltip">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modern Pagination Controls -->
+        {% if pagination.pages > 1 %}
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center p-3 border-top gap-2">
+            <small class="text-secondary fw-semibold">
+                Showing page {{ pagination.page }} of {{ pagination.pages }}
+            </small>
+            <nav aria-label="Violations pagination">
+                <ul class="pagination pagination-sm mb-0 gap-1">
+                    <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                        <a class="page-link rounded-pill px-3" href="{{ url_for('violations_list', page=pagination.prev_num, vehicle_number=vehicle_query, violation_type=type_query, violation_date=date_query, payment_status=status_query) if pagination.has_prev else '#' }}">
+                            <i class="bi bi-chevron-left me-1"></i> Prev
+                        </a>
+                    </li>
+
+                    {% for p in pagination.iter_pages(left_edge=2, left_current=2, right_current=2, right_edge=2) %}
+                        {% if p %}
+                            <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                                <a class="page-link rounded-pill px-3 {% if p == pagination.page %}bg-primary text-white fw-bold shadow-sm{% endif %}" href="{{ url_for('violations_list', page=p, vehicle_number=vehicle_query, violation_type=type_query, violation_date=date_query, payment_status=status_query) }}">{{ p }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link border-0">…</span></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                        <a class="page-link rounded-pill px-3" href="{{ url_for('violations_list', page=pagination.next_num, vehicle_number=vehicle_query, violation_type=type_query, violation_date=date_query, payment_status=status_query) if pagination.has_next else '#' }}">
+                            Next <i class="bi bi-chevron-right ms-1"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="p-5 text-center text-muted">
+            <div class="brand-icon-wrapper bg-light text-secondary mx-auto mb-3" style="width: 64px; height: 64px; font-size: 2rem;">
+                <i class="bi bi-search"></i>
+            </div>
+            <h5 class="fw-bold text-dark">No matching violations found</h5>
+            <p class="small mb-3">Try adjusting your vehicle number search, offense type, or date criteria.</p>
+            <a href="{{ url_for('violations_list') }}" class="btn btn-modern-outline btn-sm">
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Clear Filters
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

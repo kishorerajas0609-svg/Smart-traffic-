@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Officer Login — TraffiVigil{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 72vh;">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+        <div class="card card-modern border-0 shadow-lg" style="background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.25) !important;">
+            <div class="card-modern-header border-bottom py-4 flex-column text-center" 
+                 style="background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);">
+                <div class="brand-icon-wrapper mb-3" style="width: 52px; height: 52px; font-size: 1.6rem; border-radius: 14px; box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);">
+                    <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <h3 class="fw-bold text-white mb-1">Officer Login</h3>
+                <p class="text-secondary small mb-0">TraffiVigil Officer Terminal</p>
+            </div>
+            
+            <div class="card-modern-body p-4 p-md-4">
+                <form method="POST" action="{{ url_for('login', next=request.args.get('next')) }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-bold small text-uppercase text-secondary" style="font-size: 0.75rem;">
+                            <i class="bi bi-person-badge text-primary me-1"></i> Officer ID / Username
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text-modern"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control form-control-modern font-mono" id="username" name="username" 
+                                   placeholder="Enter Username" value="{{ default_user if default_user else '' }}" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-bold small text-uppercase text-secondary" style="font-size: 0.75rem;">
+                            <i class="bi bi-key-fill text-primary me-1"></i> Password
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text-modern"><i class="bi bi-lock"></i></span>
+                            <input type="password" class="form-control form-control-modern font-mono" id="password" name="password" 
+                                   placeholder="Enter Password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-modern-primary w-100 py-3">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Authenticate & Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

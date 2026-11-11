@@ -1,0 +1,151 @@
+id,vehicle_number,violation_type,location,violation_date,fine_amount,payment_status,created_at
+1,HR26AZ5507,Drunk Driving,"Cyber City, Gurugram",2026-08-26,10000.0,Paid,2026-08-26 10:43:00
+2,AP31CU7913,No Helmet,Visakhapatnam Beach Road,2026-09-20,1000.0,Paid,2026-09-20 14:32:00
+3,RJ14TG9929,Driving Without License,"MI Road, Jaipur",2026-08-26,5000.0,Unpaid,2026-08-26 15:51:00
+4,TN07YP6575,No Seat Belt,"T. Nagar, Chennai",2026-09-04,1000.0,Paid,2026-09-04 17:06:00
+5,MH12DM6636,Dangerous Driving,"FC Road, Pune",2026-08-21,5000.0,Unpaid,2026-08-21 21:34:00
+6,MH12CT5804,Dangerous Driving,"FC Road, Pune",2026-08-08,5000.0,Unpaid,2026-08-08 09:02:00
+7,HR26KC4815,Overspeeding,"Cyber City, Gurugram",2026-08-06,2000.0,Paid,2026-08-06 18:10:00
+8,TS10GX5375,Overspeeding,Secunderabad Junction,2026-07-08,2000.0,Unpaid,2026-07-08 14:10:00
+9,UP70JW4599,Wrong Parking,Varanasi Cantt,2026-09-16,500.0,Paid,2026-09-16 08:51:00
+10,TS11JC4457,Dangerous Driving,"Gachibowli, Hyderabad",2026-08-14,5000.0,Paid,2026-08-14 22:25:00
+11,HR51EJ3288,Drunk Driving,Faridabad Sector 15,2026-07-14,10000.0,Unpaid,2026-07-14 20:57:00
+12,RJ20MH3267,Using Mobile Phone while Driving,Jodhpur Old City,2026-07-22,1500.0,Paid,2026-07-22 08:55:00
+13,MH02WF7917,Dangerous Driving,"Bandra-Worli Sea Link, Mumbai",2026-09-15,5000.0,Paid,2026-09-15 21:33:00
+14,KL14AX2877,Using Mobile Phone while Driving,Kasaragod Town,2026-08-20,1500.0,Unpaid,2026-08-20 17:07:00
+15,KL11FQ1054,No Seat Belt,Calicut Beach Road,2026-07-21,1000.0,Unpaid,2026-07-21 10:55:00
+16,HR51WS4259,Signal Violation,Faridabad Sector 15,2026-08-07,1500.0,Unpaid,2026-08-07 07:38:00
+17,TS11AD6948,No Seat Belt,"Gachibowli, Hyderabad",2026-08-24,1000.0,Paid,2026-08-24 09:05:00
+18,AP16CT3061,Signal Violation,Vijayawada Benz Circle,2026-07-01,1500.0,Unpaid,2026-07-01 12:16:00
+19,WB74GT4296,No Seat Belt,Siliguri Junction,2026-08-03,1000.0,Unpaid,2026-08-03 18:28:00
+20,WB74DH4682,Overspeeding,Siliguri Junction,2026-08-11,2000.0,Paid,2026-08-11 14:37:00
+21,KA01CY1965,Drunk Driving,"MG Road, Bengaluru",2026-09-15,10000.0,Unpaid,2026-09-15 17:04:00
+22,WB02JX8954,Drunk Driving,"Howrah Bridge Approach, Kolkata",2026-07-16,10000.0,Paid,2026-07-16 22:15:00
+23,UP70GD2589,Driving Without License,Varanasi Cantt,2026-08-09,5000.0,Unpaid,2026-08-09 21:55:00
+24,AP03XW2613,No Helmet,Tirupati Temple Road,2026-08-03,1000.0,Unpaid,2026-08-03 10:15:00
+25,KA03TQ3297,Driving Without License,"Indiranagar, Bengaluru",2026-08-31,5000.0,Paid,2026-08-31 14:55:00
+26,MH12TD1829,Using Mobile Phone while Driving,"FC Road, Pune",2026-09-22,1500.0,Unpaid,2026-09-22 14:10:00
+27,GJ03RG7571,No Helmet,"Race Course, Rajkot",2026-09-02,1000.0,Paid,2026-09-02 19:16:00
+28,UP14PY8974,Signal Violation,"Indirapuram, Ghaziabad",2026-08-30,1500.0,Paid,2026-08-30 08:37:00
+29,AP31BZ6139,No Helmet,Visakhapatnam Beach Road,2026-09-17,1000.0,Unpaid,2026-09-17 12:03:00
+30,WB01FC2114,Drunk Driving,"Park Street, Kolkata",2026-08-03,10000.0,Paid,2026-08-03 14:37:00
+31,RJ14VC7869,Dangerous Driving,"MI Road, Jaipur",2026-07-13,5000.0,Unpaid,2026-07-13 15:13:00
+32,HR06LH5352,Driving Without License,Panipat GT Road,2026-09-07,5000.0,Unpaid,2026-09-07 16:29:00
+33,TS07AQ2639,Overspeeding,"Hitec City, Hyderabad",2026-07-17,2000.0,Paid,2026-07-17 15:08:00
+34,TS07HM5670,Signal Violation,"Hitec City, Hyderabad",2026-07-29,1500.0,Unpaid,2026-07-29 16:39:00
+35,HR06AX5906,Overspeeding,Panipat GT Road,2026-09-06,2000.0,Paid,2026-09-06 10:47:00
+36,WB02JK4451,Wrong Parking,"Howrah Bridge Approach, Kolkata",2026-08-28,500.0,Unpaid,2026-08-28 15:32:00
+37,UP14BC7940,No Seat Belt,"Indirapuram, Ghaziabad",2026-09-18,1000.0,Paid,2026-09-18 11:40:00
+38,KL07ZQ8008,Using Mobile Phone while Driving,"Marine Drive, Kochi",2026-09-22,1500.0,Paid,2026-09-22 11:34:00
+39,TN38UT3427,Driving Without License,"RS Puram, Coimbatore",2026-09-07,5000.0,Paid,2026-09-07 18:57:00
+40,TN38GX5089,Overspeeding,"RS Puram, Coimbatore",2026-08-09,2000.0,Unpaid,2026-08-09 20:39:00
+41,AP03HF3901,Driving Without License,Tirupati Temple Road,2026-09-20,5000.0,Paid,2026-09-20 17:50:00
+42,GJ06JF2772,Driving Without License,"Alkapuri, Vadodara",2026-09-19,5000.0,Unpaid,2026-09-19 14:12:00
+43,UP14KH4653,No Helmet,"Indirapuram, Ghaziabad",2026-07-01,1000.0,Paid,2026-07-01 17:17:00
+44,MH31JM9347,Driving Without License,Nagpur Ring Road,2026-06-29,5000.0,Unpaid,2026-06-29 17:01:00
+45,MH03FU5350,No Helmet,"Andheri West, Mumbai",2026-09-10,1000.0,Unpaid,2026-09-10 18:46:00
+46,TS11VS2895,Driving Without License,"Gachibowli, Hyderabad",2026-07-12,5000.0,Paid,2026-07-12 08:45:00
+47,GJ01ST4229,Wrong Parking,"SG Highway, Ahmedabad",2026-07-30,500.0,Paid,2026-07-30 17:39:00
+48,TS07ZK9309,No Seat Belt,"Hitec City, Hyderabad",2026-06-30,1000.0,Unpaid,2026-06-30 19:44:00
+49,KL14EG7889,Driving Without License,Kasaragod Town,2026-06-29,5000.0,Unpaid,2026-06-29 12:39:00
+50,RJ20NT1007,No Seat Belt,Jodhpur Old City,2026-08-18,1000.0,Paid,2026-08-18 17:29:00
+51,UP70XG9376,Triple Riding,Varanasi Cantt,2026-09-02,1000.0,Unpaid,2026-09-02 16:32:00
+52,HR06VL2531,Drunk Driving,Panipat GT Road,2026-06-29,10000.0,Paid,2026-06-29 13:09:00
+53,TN01HR2194,Triple Riding,Chennai Central,2026-08-01,1000.0,Unpaid,2026-08-01 13:45:00
+54,AP16RN4998,Signal Violation,Vijayawada Benz Circle,2026-07-02,1500.0,Unpaid,2026-07-02 10:49:00
+55,GJ06FY9487,Triple Riding,"Alkapuri, Vadodara",2026-09-17,1000.0,Unpaid,2026-09-17 10:29:00
+56,DL08XS6199,Triple Riding,"Lajpat Nagar, Delhi",2026-07-07,1000.0,Unpaid,2026-07-07 20:53:00
+57,WB74FZ8778,Triple Riding,Siliguri Junction,2026-08-21,1000.0,Unpaid,2026-08-21 15:49:00
+58,WB74WH5500,Triple Riding,Siliguri Junction,2026-09-14,1000.0,Unpaid,2026-09-14 14:17:00
+59,TS10TC3268,Signal Violation,Secunderabad Junction,2026-08-25,1500.0,Paid,2026-08-25 11:45:00
+60,KA01PP6422,Using Mobile Phone while Driving,"MG Road, Bengaluru",2026-07-26,1500.0,Unpaid,2026-07-26 13:53:00
+61,GJ03UY1321,Dangerous Driving,"Race Course, Rajkot",2026-08-06,5000.0,Unpaid,2026-08-06 18:19:00
+62,GJ03TZ9948,Dangerous Driving,"Race Course, Rajkot",2026-08-26,5000.0,Unpaid,2026-08-26 15:27:00
+63,UP32NL7625,Signal Violation,"Hazratganj, Lucknow",2026-07-26,1500.0,Unpaid,2026-07-26 07:58:00
+64,GJ01CW8023,Signal Violation,"SG Highway, Ahmedabad",2026-07-26,1500.0,Paid,2026-07-26 15:24:00
+65,TS09QL6530,Driving Without License,"Banjara Hills, Hyderabad",2026-08-19,5000.0,Unpaid,2026-08-19 20:16:00
+66,MH12AZ9838,No Helmet,"FC Road, Pune",2026-08-10,1000.0,Paid,2026-08-10 09:49:00
+67,HR26AH4267,No Helmet,"Cyber City, Gurugram",2026-07-06,1000.0,Paid,2026-07-06 11:30:00
+68,HR26UG8620,No Seat Belt,"Cyber City, Gurugram",2026-08-07,1000.0,Paid,2026-08-07 10:49:00
+69,DL04DU1421,No Seat Belt,"Karol Bagh, Delhi",2026-07-12,1000.0,Unpaid,2026-07-12 19:25:00
+70,AP03CU4979,Overspeeding,Tirupati Temple Road,2026-06-26,2000.0,Unpaid,2026-06-26 10:50:00
+71,RJ14MT8019,Wrong Parking,"MI Road, Jaipur",2026-09-15,500.0,Unpaid,2026-09-15 17:00:00
+72,GJ03DP6935,Triple Riding,"Race Course, Rajkot",2026-06-25,1000.0,Paid,2026-06-25 12:46:00
+73,WB20VT8922,Triple Riding,"Salt Lake Sector 5, Kolkata",2026-07-30,1000.0,Unpaid,2026-07-30 15:20:00
+74,KA01JQ4996,Triple Riding,"MG Road, Bengaluru",2026-07-13,1000.0,Unpaid,2026-07-13 19:21:00
+75,TN58LF8989,Drunk Driving,"Mattuthavani, Madurai",2026-08-09,10000.0,Unpaid,2026-08-09 17:17:00
+76,RJ27JT1167,Using Mobile Phone while Driving,Udaipur City Center,2026-08-30,1500.0,Paid,2026-08-30 20:31:00
+77,WB02YR9042,Triple Riding,"Howrah Bridge Approach, Kolkata",2026-09-21,1000.0,Paid,2026-09-21 14:25:00
+78,AP03KX7047,Triple Riding,Tirupati Temple Road,2026-07-15,1000.0,Unpaid,2026-07-15 20:47:00
+79,WB20MY8435,No Seat Belt,"Salt Lake Sector 5, Kolkata",2026-08-15,1000.0,Paid,2026-08-15 10:46:00
+80,KA04DZ9780,Signal Violation,"Koramangala, Bengaluru",2026-08-30,1500.0,Paid,2026-08-30 22:17:00
+81,AP31SV5637,Overspeeding,Visakhapatnam Beach Road,2026-08-30,2000.0,Paid,2026-08-30 18:11:00
+82,KL01YT3074,No Seat Belt,Thiruvananthapuram City,2026-09-18,1000.0,Unpaid,2026-09-18 16:44:00
+83,DL12RD1201,Dangerous Driving,"Dwarka Expressway, Delhi",2026-08-18,5000.0,Unpaid,2026-08-18 21:21:00
+84,DL01JR2870,Overspeeding,"Connaught Place, New Delhi",2026-08-03,2000.0,Unpaid,2026-08-03 08:09:00
+85,DL10KC5067,Overspeeding,"Rohini Sector 10, Delhi",2026-07-14,2000.0,Unpaid,2026-07-14 14:49:00
+86,WB74QQ5872,Dangerous Driving,Siliguri Junction,2026-07-31,5000.0,Paid,2026-07-31 08:39:00
+87,AP03GW4458,No Seat Belt,Tirupati Temple Road,2026-07-01,1000.0,Paid,2026-07-01 14:11:00
+88,WB01FA7694,Triple Riding,"Park Street, Kolkata",2026-06-27,1000.0,Unpaid,2026-06-27 16:02:00
+89,KA04YK8439,Overspeeding,"Koramangala, Bengaluru",2026-06-28,2000.0,Paid,2026-06-28 15:50:00
+90,HR06XG7966,Overspeeding,Panipat GT Road,2026-07-16,2000.0,Paid,2026-07-16 11:58:00
+91,KL07CB3719,No Seat Belt,"Marine Drive, Kochi",2026-07-09,1000.0,Unpaid,2026-07-09 16:28:00
+92,MH12YK7595,No Seat Belt,"FC Road, Pune",2026-07-21,1000.0,Unpaid,2026-07-21 21:05:00
+93,RJ14PZ6281,Dangerous Driving,"MI Road, Jaipur",2026-08-22,5000.0,Paid,2026-08-22 14:43:00
+94,RJ27AX5416,Dangerous Driving,Udaipur City Center,2026-09-18,5000.0,Unpaid,2026-09-18 12:30:00
+95,WB74JF8142,Triple Riding,Siliguri Junction,2026-09-12,1000.0,Unpaid,2026-09-12 20:21:00
+96,TS07FL7745,Triple Riding,"Hitec City, Hyderabad",2026-08-18,1000.0,Unpaid,2026-08-18 19:52:00
+97,WB01QC6154,No Seat Belt,"Park Street, Kolkata",2026-08-13,1000.0,Paid,2026-08-13 19:55:00
+98,WB01XT8570,Driving Without License,"Park Street, Kolkata",2026-09-17,5000.0,Paid,2026-09-17 18:39:00
+99,UP70BG5376,Using Mobile Phone while Driving,Varanasi Cantt,2026-09-07,1500.0,Unpaid,2026-09-07 21:56:00
+100,AP16DA4921,Signal Violation,Vijayawada Benz Circle,2026-08-15,1500.0,Unpaid,2026-08-15 20:05:00
+101,KA01QD3523,Triple Riding,"MG Road, Bengaluru",2026-08-17,1000.0,Unpaid,2026-08-17 15:26:00
+102,UP70HQ3370,Driving Without License,Varanasi Cantt,2026-08-30,5000.0,Unpaid,2026-08-30 11:55:00
+103,MH03PL9319,No Seat Belt,"Andheri West, Mumbai",2026-09-23,1000.0,Paid,2026-09-23 16:53:00
+104,RJ27XR3435,Triple Riding,Udaipur City Center,2026-07-17,1000.0,Unpaid,2026-07-17 17:35:00
+105,WB74QL4091,Drunk Driving,Siliguri Junction,2026-07-12,10000.0,Paid,2026-07-12 20:02:00
+106,TS11YN7326,Signal Violation,"Gachibowli, Hyderabad",2026-07-22,1500.0,Unpaid,2026-07-22 11:32:00
+107,RJ20DQ2634,Using Mobile Phone while Driving,Jodhpur Old City,2026-07-27,1500.0,Paid,2026-07-27 11:26:00
+108,HR26CR5343,Wrong Parking,"Cyber City, Gurugram",2026-07-06,500.0,Unpaid,2026-07-06 09:54:00
+109,TS08NL8995,Using Mobile Phone while Driving,Warangal Fort Road,2026-09-19,1500.0,Unpaid,2026-09-19 14:40:00
+110,HR51HZ2481,Driving Without License,Faridabad Sector 15,2026-09-11,5000.0,Unpaid,2026-09-11 10:28:00
+111,DL12KA1754,Wrong Parking,"Dwarka Expressway, Delhi",2026-09-16,500.0,Paid,2026-09-16 18:27:00
+112,DL02SP3951,Signal Violation,"India Gate Circle, New Delhi",2026-09-01,1500.0,Paid,2026-09-01 19:39:00
+113,HR26RU3345,Drunk Driving,"Cyber City, Gurugram",2026-07-26,10000.0,Unpaid,2026-07-26 21:16:00
+114,HR26QK9956,Signal Violation,"Cyber City, Gurugram",2026-09-14,1500.0,Unpaid,2026-09-14 18:37:00
+115,KL11YJ8485,No Seat Belt,Calicut Beach Road,2026-08-29,1000.0,Unpaid,2026-08-29 22:06:00
+116,KA05UM5848,No Seat Belt,"Jayanagar, Bengaluru",2026-09-21,1000.0,Unpaid,2026-09-21 19:17:00
+117,TN01VZ9139,No Seat Belt,Chennai Central,2026-08-25,1000.0,Unpaid,2026-08-25 18:14:00
+118,HR26VJ3241,Overspeeding,"Cyber City, Gurugram",2026-07-05,2000.0,Unpaid,2026-07-05 16:50:00
+119,UP32UM3154,Overspeeding,"Hazratganj, Lucknow",2026-08-17,2000.0,Paid,2026-08-17 20:11:00
+120,KA03TM9698,Using Mobile Phone while Driving,"Indiranagar, Bengaluru",2026-08-20,1500.0,Unpaid,2026-08-20 15:58:00
+121,UP14ZL2887,Triple Riding,"Indirapuram, Ghaziabad",2026-09-14,1000.0,Paid,2026-09-14 14:55:00
+122,HR06XN6993,Overspeeding,Panipat GT Road,2026-08-04,2000.0,Paid,2026-08-04 10:29:00
+123,TS10UN7087,Overspeeding,Secunderabad Junction,2026-06-29,2000.0,Paid,2026-06-29 07:39:00
+124,WB20VH2036,Triple Riding,"Salt Lake Sector 5, Kolkata",2026-06-26,1000.0,Paid,2026-06-26 20:07:00
+125,DL01BK9072,Overspeeding,"Connaught Place, New Delhi",2026-09-11,2000.0,Paid,2026-09-11 11:24:00
+126,UP14XZ9851,Driving Without License,"Indirapuram, Ghaziabad",2026-07-10,5000.0,Unpaid,2026-07-10 11:56:00
+127,GJ01RV7687,No Seat Belt,"SG Highway, Ahmedabad",2026-09-19,1000.0,Unpaid,2026-09-19 13:28:00
+128,UP16MD7019,Using Mobile Phone while Driving,Noida Sector 18,2026-07-03,1500.0,Paid,2026-07-03 19:17:00
+129,KA01QC4476,Dangerous Driving,"MG Road, Bengaluru",2026-09-21,5000.0,Paid,2026-09-21 17:15:00
+130,DL10GC4395,Dangerous Driving,"Rohini Sector 10, Delhi",2026-08-27,5000.0,Unpaid,2026-08-27 14:21:00
+131,DL10AJ3371,Signal Violation,"Rohini Sector 10, Delhi",2026-07-16,1500.0,Paid,2026-07-16 12:07:00
+132,HR26EA6870,Drunk Driving,"Cyber City, Gurugram",2026-07-10,10000.0,Paid,2026-07-10 12:16:00
+133,TN07ZP9620,Overspeeding,"T. Nagar, Chennai",2026-09-15,2000.0,Unpaid,2026-09-15 18:32:00
+134,RJ14QS4630,Dangerous Driving,"MI Road, Jaipur",2026-09-18,5000.0,Unpaid,2026-09-18 16:29:00
+135,HR26BR7581,Driving Without License,"Cyber City, Gurugram",2026-06-28,5000.0,Paid,2026-06-28 21:04:00
+136,MH03VE2077,Signal Violation,"Andheri West, Mumbai",2026-08-19,1500.0,Unpaid,2026-08-19 17:24:00
+137,RJ27KQ9283,Dangerous Driving,Udaipur City Center,2026-07-30,5000.0,Paid,2026-07-30 10:54:00
+138,HR06TZ4523,Driving Without License,Panipat GT Road,2026-07-28,5000.0,Unpaid,2026-07-28 20:21:00
+139,UP70PZ2558,Wrong Parking,Varanasi Cantt,2026-07-31,500.0,Paid,2026-07-31 15:23:00
+140,DL12RC2495,Overspeeding,"Dwarka Expressway, Delhi",2026-09-12,2000.0,Unpaid,2026-09-12 18:51:00
+141,DL10BU6401,Overspeeding,"Rohini Sector 10, Delhi",2026-08-02,2000.0,Paid,2026-08-02 20:55:00
+142,AP03KV6120,Wrong Parking,Tirupati Temple Road,2026-09-10,500.0,Unpaid,2026-09-10 13:09:00
+143,HR51HD6737,Using Mobile Phone while Driving,Faridabad Sector 15,2026-08-07,1500.0,Paid,2026-08-07 15:36:00
+144,KA05TV1431,Dangerous Driving,"Jayanagar, Bengaluru",2026-07-01,5000.0,Unpaid,2026-07-01 15:01:00
+145,DL04YK6568,Wrong Parking,"Karol Bagh, Delhi",2026-09-23,500.0,Paid,2026-09-23 11:36:00
+146,HR51CE1503,Overspeeding,Faridabad Sector 15,2026-07-18,2000.0,Paid,2026-07-18 20:29:00
+147,TS09MK6315,Dangerous Driving,"Banjara Hills, Hyderabad",2026-07-09,5000.0,Paid,2026-07-09 08:09:00
+148,DL10BX2337,No Seat Belt,"Rohini Sector 10, Delhi",2026-07-29,1000.0,Unpaid,2026-07-29 22:38:00
+149,UP70JG9395,Overspeeding,Varanasi Cantt,2026-08-10,2000.0,Unpaid,2026-08-10 16:43:00
+150,HR06RS6054,No Helmet,Panipat GT Road,2026-08-26,1000.0,Paid,2026-08-26 08:00:00

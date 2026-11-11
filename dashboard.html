@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+
+{% block title %}Officer Dashboard — TraffiVigil{% endblock %}
+
+{% block content %}
+<!-- Top Header Area -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 pb-3 border-bottom border-light-subtle" style="border-color: rgba(255,255,255,0.08) !important;">
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 fw-bold">
+                <i class="bi bi-broadcast me-1"></i> LIVE ENFORCEMENT TERMINAL
+            </span>
+            <span class="badge bg-dark text-secondary border border-secondary rounded-pill px-3 py-1 font-mono small">
+                Shift: Active Duty
+            </span>
+        </div>
+        <h2 class="fw-bold mb-0 text-white font-heading">Officer Dashboard</h2>
+        <p class="text-secondary small mb-0 fw-medium">Real-time statistics, violation tracking, statutory MVA enforcement, and automated challan lifecycle overview.</p>
+    </div>
+    <div class="mt-3 mt-md-0 d-flex gap-2">
+        <a href="{{ url_for('add_violation') }}" class="btn btn-modern-primary">
+            <i class="bi bi-plus-circle-fill"></i> Issue New Challan
+        </a>
+        <a href="{{ url_for('violations_list') }}" class="btn btn-modern-outline">
+            <i class="bi bi-collection-fill"></i> View All Records
+        </a>
+    </div>
+</div>
+
+<!-- Modern KPI Grid -->
+<div class="row g-3 mb-4">
+    <!-- Total Violations -->
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-blue h-100">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.75rem; letter-spacing: 0.05em;">Total Violations</span>
+                    <div class="stat-number text-white">{{ total_violations }}</div>
+                    <span class="badge bg-primary-subtle text-primary rounded-pill mt-2 small fw-semibold">
+                        <i class="bi bi-database me-1"></i> Lifetime Recorded
+                    </span>
+                </div>
+                <div class="stat-icon-wrapper bg-primary-subtle text-primary">
+                    <i class="bi bi-files"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unpaid Challans -->
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-red h-100">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.75rem; letter-spacing: 0.05em;">Pending Unpaid</span>
+                    <div class="stat-number text-danger">{{ unpaid_violations }}</div>
+                    <span class="badge bg-danger-subtle text-danger rounded-pill mt-2 small fw-semibold">
+                        <i class="bi bi-exclamation-circle me-1"></i> Awaiting Fine
+                    </span>
+                </div>
+                <div class="stat-icon-wrapper bg-danger-subtle text-danger">
+                    <i class="bi bi-hourglass-top"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paid Challans -->
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-green h-100">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.75rem; letter-spacing: 0.05em;">Settled / Cleared</span>
+                    <div class="stat-number text-success">{{ paid_violations }}</div>
+                    <span class="badge bg-success-subtle text-success rounded-pill mt-2 small fw-semibold">
+                        <i class="bi bi-check-circle me-1"></i> Verified Payments
+                    </span>
+                </div>
+                <div class="stat-icon-wrapper bg-success-subtle text-success">
+                    <i class="bi bi-patch-check-fill"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Fine Amount -->
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="stat-card-modern stat-card-amber h-100">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="text-secondary fw-bold text-uppercase small" style="font-size: 0.75rem; letter-spacing: 0.05em;">Total Fine Assessed</span>
+                    <div class="stat-number text-white" style="font-size: 1.75rem;">₹{{ "{:,.0f}".format(total_fine_amount) }}</div>
+                    <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill mt-2 small fw-semibold">
+                        <i class="bi bi-cash me-1"></i> Cumulative INR
+                    </span>
+                </div>
+                <div class="stat-icon-wrapper bg-warning-subtle text-warning">
+                    <i class="bi bi-currency-rupee"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Revenue Analytics Split Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-12 col-md-6">
+        <div class="card card-modern p-4 border-start border-success border-4" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(6, 78, 59, 0.25) 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-success fw-bold text-uppercase small letter-spacing">Total Collected Revenue</span>
+                    <h2 class="fw-bold text-success mb-1 mt-1 font-heading">₹{{ "{:,.2f}".format(total_collected_amount) }}</h2>
+                    <small class="text-secondary fw-medium">Successfully processed through digital & station verification</small>
+                </div>
+                <div class="stat-icon-wrapper bg-success text-white shadow-sm" style="width: 56px; height: 56px; background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;">
+                    <i class="bi bi-wallet2 fs-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="card card-modern p-4 border-start border-danger border-4" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(127, 29, 29, 0.25) 100%);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-danger fw-bold text-uppercase small letter-spacing">Pending Unpaid Revenue</span>
+                    <h2 class="fw-bold text-danger mb-1 mt-1 font-heading">₹{{ "{:,.2f}".format(pending_amount) }}</h2>
+                    <small class="text-secondary fw-medium">Outstanding non-compound fines currently in recovery</small>
+                </div>
+                <div class="stat-icon-wrapper bg-danger text-white shadow-sm" style="width: 56px; height: 56px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;">
+                    <i class="bi bi-clock-history fs-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statutory Legal Matrix & Enforcement Telemetry Grid -->
+<div class="row g-3 mb-4">
+    <!-- MVA Statutory Tariff Reference -->
+    <div class="col-12 col-lg-8">
+        <div class="card card-modern h-100">
+            <div class="card-modern-header py-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-book-half text-primary"></i>
+                    <h6 class="fw-bold mb-0 text-white font-heading">Motor Vehicles Act (MVA) Compounding Tariff Matrix</h6>
+                </div>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-1 small">Statutory Rates</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table-modern">
+                        <thead>
+                            <tr>
+                                <th>Offense Category</th>
+                                <th>MVA Section</th>
+                                <th>Compounding Fine</th>
+                                <th>Enforcement Penalty Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="fw-bold text-white">No Helmet</span></td>
+                                <td><code class="text-primary fw-bold font-mono">Sec 129/177</code></td>
+                                <td><span class="text-success fw-bold">₹1,000</span></td>
+                                <td><small class="text-secondary">3-Month License Suspension Warning</small></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-bold text-white">Overspeeding</span></td>
+                                <td><code class="text-primary fw-bold font-mono">Sec 112/183</code></td>
+                                <td><span class="text-success fw-bold">₹2,000</span></td>
+                                <td><small class="text-secondary">Speed Gun / ANPR Auto Logging</small></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-bold text-white">Signal Violation</span></td>
+                                <td><code class="text-primary fw-bold font-mono">Sec 184/177</code></td>
+                                <td><span class="text-success fw-bold">₹1,500</span></td>
+                                <td><small class="text-secondary">RLVD Camera Capture</small></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-bold text-white">Drunk Driving</span></td>
+                                <td><code class="text-danger fw-bold font-mono">Sec 185</code></td>
+                                <td><span class="text-danger fw-bold">₹10,000</span></td>
+                                <td><small class="text-danger">Court Summons / Vehicle Impound</small></td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-bold text-white">Driving Without License</span></td>
+                                <td><code class="text-primary fw-bold font-mono">Sec 181</code></td>
+                                <td><span class="text-success fw-bold">₹5,000</span></td>
+                                <td><small class="text-secondary">Immediate Vehicle Seizure</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Enforcement Telemetry & Quick Dispatch Guide -->
+    <div class="col-12 col-lg-4">
+        <div class="card card-modern h-100 p-4">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="brand-icon-wrapper" style="width: 36px; height: 36px; font-size: 1.1rem;">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+                <h6 class="fw-bold mb-0 text-white font-heading">Enforcement Telemetry</h6>
+            </div>
+
+            <div class="p-3 rounded-4 mb-3" style="background: rgba(11, 17, 32, 0.8); border: 1px solid rgba(255,255,255,0.06);">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="text-secondary small fw-semibold">Settlement Rate</span>
+                    <span class="text-success fw-bold font-mono">
+                        {% if total_violations > 0 %}
+                            {{ "{:.1f}".format((paid_violations / total_violations) * 100) }}%
+                        {% else %}
+                            0%
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                    <div class="progress-bar bg-success" role="progressbar" 
+                         style="width: {% if total_violations > 0 %}{{ (paid_violations / total_violations) * 100 }}{% else %}0{% endif %}%;"></div>
+                </div>
+            </div>
+
+            <div class="p-3 rounded-4 mb-3" style="background: rgba(11, 17, 32, 0.8); border: 1px solid rgba(255,255,255,0.06);">
+                <span class="text-secondary small fw-bold text-uppercase d-block mb-2" style="font-size: 0.7rem;">Top City Hotspots</span>
+                <ul class="list-unstyled mb-0 small text-slate">
+                    <li class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                        <span><i class="bi bi-geo-alt text-primary me-1"></i> Anna Salai, Chennai</span>
+                        <span class="badge bg-dark text-secondary">High Flow</span>
+                    </li>
+                    <li class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                        <span><i class="bi bi-geo-alt text-primary me-1"></i> Bandra-Worli Sea Link</span>
+                        <span class="badge bg-dark text-secondary">Radar Zone</span>
+                    </li>
+                    <li class="d-flex justify-content-between py-1">
+                        <span><i class="bi bi-geo-alt text-primary me-1"></i> MG Road, Bengaluru</span>
+                        <span class="badge bg-dark text-secondary">Signal ANPR</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-auto pt-2 text-center">
+                <small class="text-secondary"><i class="bi bi-telephone-fill text-primary me-1"></i> Control Room Emergency: <strong>103 / 112</strong></small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Violations Card -->
+<div class="card card-modern">
+    <div class="card-modern-header py-3">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-activity text-primary fs-5"></i>
+            <h5 class="fw-bold mb-0 text-white font-heading">Recent Violation Log (Last 8 Records)</h5>
+        </div>
+        <a href="{{ url_for('violations_list') }}" class="btn btn-sm btn-modern-outline">
+            Full Violations Log <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+    <div class="card-body p-0">
+        {% if recent_violations %}
+        <div class="table-responsive">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th>Challan ID</th>
+                        <th>Vehicle Registration</th>
+                        <th>Offense Type</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Compounding Fine</th>
+                        <th>Status</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in recent_violations %}
+                    <tr>
+                        <td>
+                            <span class="font-mono fw-bold text-secondary">#{{ v.id }}</span>
+                        </td>
+                        <td>
+                            <div class="vehicle-plate-modern">
+                                <span class="plate-ind"><span class="chakra"></span>IND</span>
+                                <span class="plate-number">{{ v.vehicle_number }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="fw-semibold text-white">{{ v.violation_type }}</span>
+                        </td>
+                        <td>
+                            <span class="text-secondary small"><i class="bi bi-geo-alt text-danger me-1"></i>{{ v.location }}</span>
+                        </td>
+                        <td>
+                            <span class="text-secondary small">{{ v.violation_date.strftime('%d-%b-%Y') }}</span>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-white font-heading">₹{{ "{:,.2f}".format(v.fine_amount) }}</span>
+                        </td>
+                        <td>
+                            {% if v.payment_status == 'Paid' %}
+                                <span class="badge-status badge-paid-modern">Paid</span>
+                            {% else %}
+                                <span class="badge-status badge-unpaid-modern">Unpaid</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('violation_detail', id=v.id) }}" class="btn btn-dark border rounded-start-pill px-2" title="Inspect Details">
+                                    <i class="bi bi-eye-fill text-primary"></i>
+                                </a>
+                                <a href="{{ url_for('view_challan', id=v.id) }}" class="btn btn-dark border rounded-end-pill px-2" title="Digital Challan Pass">
+                                    <i class="bi bi-receipt text-secondary"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="p-5 text-center text-muted">
+            <i class="bi bi-inbox display-4 d-block mb-3 text-secondary"></i>
+            <h5 class="fw-bold text-white font-heading">No recorded violations found in database</h5>
+            <p class="small mb-3">Begin by recording your first traffic offense.</p>
+            <a href="{{ url_for('add_violation') }}" class="btn btn-modern-primary btn-sm">
+                <i class="bi bi-plus-circle me-1"></i> Issue First Challan
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

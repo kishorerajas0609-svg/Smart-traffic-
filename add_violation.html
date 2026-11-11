@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}Issue Traffic Challan — TraffiVigil{% endblock %}
+
+{% block content %}
+<div class="row g-4 justify-content-center">
+    <div class="col-12 col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="fw-bold text-white mb-0 font-heading">
+                    <i class="bi bi-plus-circle-fill text-primary me-2"></i>Issue Traffic Violation Challan
+                </h2>
+                <p class="text-secondary small mb-0">Record vehicle offense, assess compounding penalty, and generate QR pass.</p>
+            </div>
+            <a href="{{ url_for('violations_list') }}" class="btn btn-modern-outline btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back to History
+            </a>
+        </div>
+
+        <div class="card card-modern border-0">
+            <div class="card-modern-header py-3" style="background: rgba(11, 17, 32, 0.95);">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-file-earmark-medical-fill text-primary fs-5"></i>
+                    <div>
+                        <h6 class="mb-0 fw-bold text-white font-heading">Official Offense Registration Form</h6>
+                        <small class="text-secondary" style="font-size: 0.75rem;">Motor Vehicles Act Enforcement Protocol</small>
+                    </div>
+                </div>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 small">
+                    <i class="bi bi-qr-code-scan me-1"></i> Dynamic QR
+                </span>
+            </div>
+            
+            <div class="card-modern-body p-4 p-md-5">
+                <form method="POST" action="{{ url_for('add_violation') }}" novalidate>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label for="vehicle_number" class="form-label fw-bold text-secondary small text-uppercase" style="font-size: 0.72rem;">
+                                Vehicle Registration Number <span class="text-danger">*</span>
+                            </label>
+                            <small class="text-muted">Indian HSRP Standard Format</small>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text-modern"><i class="bi bi-car-front-fill"></i></span>
+                            <input type="text" class="form-control form-control-modern vehicle-input font-mono fw-bold fs-5" 
+                                   id="vehicle_number" name="vehicle_number" 
+                                   placeholder="e.g. TN01AB1234 or DL08CA4567" 
+                                   value="{{ form_data.get('vehicle_number', '') }}" required autofocus>
+                        </div>
+                        <div class="form-text text-muted small mt-1">
+                            <i class="bi bi-info-circle me-1"></i> Spaces and special characters are automatically normalized.
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-12 col-md-6">
+                            <label for="violation_type" class="form-label fw-bold text-secondary small text-uppercase" style="font-size: 0.72rem;">
+                                Violation Offense Category <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text-modern"><i class="bi bi-exclamation-triangle-fill text-warning"></i></span>
+                                <select class="form-select form-select-modern" id="violation_type" name="violation_type" required>
+                                    <option value="" disabled {% if not form_data.get('violation_type') %}selected{% endif %}>Select Offense...</option>
+                                    {% for vtype in violation_types %}
+                                        <option value="{{ vtype }}" {% if form_data.get('violation_type') == vtype %}selected{% endif %}>{{ vtype }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="violation_date" class="form-label fw-bold text-secondary small text-uppercase" style="font-size: 0.72rem;">
+                                Date of Offense <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text-modern"><i class="bi bi-calendar-event-fill text-info"></i></span>
+                                <input type="date" class="form-control form-control-modern" id="violation_date" name="violation_date" 
+                                       value="{{ form_data.get('violation_date', today_date) }}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="location" class="form-label fw-bold text-secondary small text-uppercase" style="font-size: 0.72rem;">
+                            Location & Junction <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text-modern"><i class="bi bi-geo-alt-fill text-danger"></i></span>
+                            <input type="text" class="form-control form-control-modern" id="location" name="location" 
+                                   placeholder="e.g. Anna Salai Junction, Chennai" 
+                                   value="{{ form_data.get('location', '') }}" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="fine_amount" class="form-label fw-bold text-secondary small text-uppercase" style="font-size: 0.72rem;">
+                            Compounding Penalty Amount (₹ INR) <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text-modern fw-bold text-success font-heading">₹</span>
+                            <input type="number" step="50" min="0" class="form-control form-control-modern font-heading fw-bold fs-5 text-success" 
+                                   id="fine_amount" name="fine_amount" 
+                                   placeholder="e.g. 1000" 
+                                   value="{{ form_data.get('fine_amount', '') }}" required>
+                        </div>
+                        <div class="form-text text-muted small mt-1">Official compounding fine levied as per statutory tariff.</div>
+                    </div>
+
+                    <div class="p-3 rounded-4 border d-flex align-items-center gap-3 mb-4" 
+                         style="background: rgba(11, 17, 32, 0.8); border-color: rgba(255,255,255,0.06) !important;">
+                        <div class="brand-icon-wrapper bg-primary text-white" style="width: 44px; height: 44px; flex-shrink: 0;">
+                            <i class="bi bi-qr-code"></i>
+                        </div>
+                        <div>
+                            <span class="fw-bold text-white d-block font-heading" style="font-size: 0.9rem;">Automated E-Challan Pipeline</span>
+                            <small class="text-secondary">Upon submission, record will default to <strong class="text-danger">Unpaid</strong> and a unique QR PNG will be dynamically generated.</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-modern-primary flex-grow-1 py-3">
+                            <i class="bi bi-qr-code-scan fs-5"></i> Generate Verified E-Challan & QR Pass
+                        </button>
+                        <button type="reset" class="btn btn-modern-outline py-3 px-4">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="card card-modern p-4 mb-3">
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-shield-check text-primary fs-4"></i>
+                <h6 class="fw-bold mb-0 text-white font-heading">Statutory Guidelines</h6>
+            </div>
+            <p class="text-secondary small mb-3">
+                Ensure vehicle registration number matches physical HSRP plate accurately. The system creates a public cryptographic verification link accessible via the QR code.
+            </p>
+            <div class="p-3 rounded-4" style="background: rgba(11, 17, 32, 0.8); border: 1px solid rgba(255,255,255,0.06);">
+                <small class="fw-bold text-white d-block mb-1 font-heading">Recommended Fine Amounts:</small>
+                <ul class="mb-0 ps-3 small text-secondary">
+                    <li>No Helmet: ₹1,000</li>
+                    <li>No Seat Belt: ₹1,000</li>
+                    <li>Signal Jumping: ₹1,500</li>
+                    <li>Overspeeding: ₹2,000</li>
+                    <li>Wrong Parking: ₹500</li>
+                    <li>Drunk Driving: ₹10,000</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
